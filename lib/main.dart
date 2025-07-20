@@ -18,12 +18,12 @@ class MyApp extends StatelessWidget {
 
   static final _router = GoRouter(
     routes: [
-      GoRoute(path: '/', builder: (_) => const SplashScreen()),
-      GoRoute(path: '/walkthrough', builder: (_) => const WalkthroughScreen()),
-      GoRoute(path: '/login', builder: (_) => const LoginScreen()),
-      GoRoute(path: '/signup', builder: (_) => const SignupScreen()),
-      GoRoute(path: '/forgot', builder: (_) => const ForgotPasswordScreen()),
-      GoRoute(path: '/home', builder: (_) => const HomeScreen()),
+      GoRoute(path: '/', builder: (_, __) => const SplashScreen()),
+      GoRoute(path: '/walkthrough', builder: (_, __) => const WalkthroughScreen()),
+      GoRoute(path: '/login', builder: (_, __) => const LoginScreen()),
+      GoRoute(path: '/signup', builder: (_, __) => const SignupScreen()),
+      GoRoute(path: '/forgot', builder: (_, __) => const ForgotPasswordScreen()),
+      GoRoute(path: '/home', builder: (_, __) => const HomeScreen()),
     ],
   );
 
