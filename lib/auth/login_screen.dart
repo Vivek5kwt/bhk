@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'bloc/auth_bloc.dart';
 import 'bloc/auth_event.dart';
 import 'bloc/auth_state.dart';
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if (state is AuthSuccess) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.message)));
+            context.go('/home');
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.error)));
@@ -60,15 +62,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       : const Text('Login'),
                 ),
                 TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/signup');
-                  },
+                  onPressed: () => context.go('/signup'),
                   child: const Text('Create account'),
                 ),
                 TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/forgot');
-                  },
+                  onPressed: () => context.go('/forgot'),
                   child: const Text('Forgot password?'),
                 ),
               ],
