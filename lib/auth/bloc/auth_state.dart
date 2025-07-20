@@ -13,3 +13,8 @@ class AuthFailure extends AuthState {
   final String error;
   AuthFailure(this.error);
 }
+
+class PhoneCodeSent extends AuthState {
+  final dynamic confirmationResult;
+  PhoneCodeSent(this.confirmationResult);
+}
