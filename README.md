@@ -1,6 +1,6 @@
 # bhook_lagi_hain
 
-A new Flutter project.
+Sample Flutter app with simple login, sign up and password recovery screens built with the Bloc state management library.
 
 ## Getting Started
 
