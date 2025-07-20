@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'auth/login_screen.dart';
 import 'auth/signup_screen.dart';
 import 'auth/forgot_password_screen.dart';
 import 'auth/bloc/auth_bloc.dart';
+import 'screens/splash_screen.dart';
+import 'screens/walkthrough_screen.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,21 +16,28 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  static final _router = GoRouter(
+    routes: [
+      GoRoute(path: '/', builder: (_) => const SplashScreen()),
+      GoRoute(path: '/walkthrough', builder: (_) => const WalkthroughScreen()),
+      GoRoute(path: '/login', builder: (_) => const LoginScreen()),
+      GoRoute(path: '/signup', builder: (_) => const SignupScreen()),
+      GoRoute(path: '/forgot', builder: (_) => const ForgotPasswordScreen()),
+      GoRoute(path: '/home', builder: (_) => const HomeScreen()),
+    ],
+  );
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => AuthBloc(),
-      child: MaterialApp(
+      child: MaterialApp.router(
         title: 'Bhook Lagi Hain',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        routes: {
-          '/signup': (_) => const SignupScreen(),
-          '/forgot': (_) => const ForgotPasswordScreen(),
-        },
-        home: const LoginScreen(),
+        routerConfig: _router,
       ),
     );
   }
