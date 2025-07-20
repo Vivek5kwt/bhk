@@ -17,6 +17,21 @@ class PasswordResetRequested extends AuthEvent {
   PasswordResetRequested(this.email);
 }
 
+class GoogleLoginRequested extends AuthEvent {}
+
+class FacebookLoginRequested extends AuthEvent {}
+
+class PhoneLoginRequested extends AuthEvent {
+  final String phoneNumber;
+  PhoneLoginRequested(this.phoneNumber);
+}
+
+class VerifyPhoneCodeRequested extends AuthEvent {
+  final dynamic confirmationResult;
+  final String smsCode;
+  VerifyPhoneCodeRequested(this.confirmationResult, this.smsCode);
+}
+
 class LogoutRequested extends AuthEvent {}
 
 class DeleteAccountRequested extends AuthEvent {}

@@ -29,6 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.error)));
+          } else if (state is PhoneCodeSent) {
+            context.go('/otp', extra: state.confirmationResult);
           }
         },
         builder: (context, state) {
@@ -60,6 +62,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: state is AuthLoading
                       ? const CircularProgressIndicator()
                       : const Text('Login'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    context.read<AuthBloc>().add(GoogleLoginRequested());
+                  },
+                  child: const Text('Login with Google'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    context.read<AuthBloc>().add(FacebookLoginRequested());
+                  },
+                  child: const Text('Login with Facebook'),
+                ),
+                ElevatedButton(
+                  onPressed: () => context.go('/phone'),
+                  child: const Text('Continue with phone'),
                 ),
                 TextButton(
                   onPressed: () => context.go('/signup'),
