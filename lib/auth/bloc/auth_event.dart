@@ -16,3 +16,7 @@ class PasswordResetRequested extends AuthEvent {
   final String email;
   PasswordResetRequested(this.email);
 }
+
+class LogoutRequested extends AuthEvent {}
+
+class DeleteAccountRequested extends AuthEvent {}

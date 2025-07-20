@@ -5,6 +5,7 @@ import 'auth/login_screen.dart';
 import 'auth/signup_screen.dart';
 import 'auth/forgot_password_screen.dart';
 import 'auth/bloc/auth_bloc.dart';
+import 'api/auth_service.dart';
 import 'screens/splash_screen.dart';
 import 'screens/walkthrough_screen.dart';
 import 'screens/home_screen.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AuthBloc(),
+      create: (_) => AuthBloc(AuthService()),
       child: MaterialApp.router(
         title: 'Bhook Lagi Hain',
         theme: ThemeData(
