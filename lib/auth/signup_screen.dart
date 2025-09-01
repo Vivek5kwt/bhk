@@ -36,14 +36,26 @@ class _SignupScreenState extends State<SignupScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const Icon(
+                  Icons.person_add,
+                  size: 80,
+                  color: Colors.deepPurple,
+                ),
+                const SizedBox(height: 20),
                 TextField(
                   controller: _emailController,
-                  decoration: const InputDecoration(labelText: 'Email'),
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    prefixIcon: Icon(Icons.email),
+                  ),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: _passwordController,
-                  decoration: const InputDecoration(labelText: 'Password'),
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                    prefixIcon: Icon(Icons.lock),
+                  ),
                   obscureText: true,
                 ),
                 const SizedBox(height: 20),
@@ -61,7 +73,13 @@ class _SignupScreenState extends State<SignupScreen> {
                       : const Text('Sign Up'),
                 ),
                 TextButton(
-                  onPressed: () => context.pop(),
+                  onPressed: () {
+                    if (context.canPop()) {
+                      context.pop();
+                    } else {
+                      context.go('/login');
+                    }
+                  },
                   child: const Text('Back to login'),
                 ),
               ],
