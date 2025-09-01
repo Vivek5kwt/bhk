@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (_) => AuthBloc(AuthService()),
       child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         title: 'Bhook Lagi Hain',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
