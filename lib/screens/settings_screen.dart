@@ -15,17 +15,17 @@ class SettingsScreen extends StatelessWidget {
         ListTile(
           title: const Text('Terms & Conditions'),
           leading: const Icon(Icons.description),
-          onTap: () => context.go('/terms'),
+          onTap: () => context.push('/terms'),
         ),
         ListTile(
           title: const Text('Privacy Policy'),
           leading: const Icon(Icons.privacy_tip),
-          onTap: () => context.go('/privacy'),
+          onTap: () => context.push('/privacy'),
         ),
         ListTile(
           title: const Text('Help'),
           leading: const Icon(Icons.help_outline),
-          onTap: () => context.go('/help'),
+          onTap: () => context.push('/help'),
         ),
         ListTile(
           title: const Text('Logout'),
