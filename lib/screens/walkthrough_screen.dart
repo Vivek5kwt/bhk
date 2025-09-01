@@ -171,17 +171,17 @@ class _WalkthroughScreenState extends State<WalkthroughScreen>
                                   children: [
                                     _LinkText(
                                       label: 'Privacy Policy',
-                                      onTap: () => _maybeShowSnack(context, 'Privacy Policy'),
+                                      onTap: () => _showContent(context, 'Privacy Policy'),
                                     ),
                                     _Dot(),
                                     _LinkText(
                                       label: 'Terms',
-                                      onTap: () => _maybeShowSnack(context, 'Terms'),
+                                      onTap: () => _showContent(context, 'Terms'),
                                     ),
                                     _Dot(),
                                     _LinkText(
                                       label: 'Help',
-                                      onTap: () => _maybeShowSnack(context, 'Help & Support'),
+                                      onTap: () => _showContent(context, 'Help & Support'),
                                     ),
                                   ],
                                 ),
@@ -206,12 +206,28 @@ class _WalkthroughScreenState extends State<WalkthroughScreen>
     context.go('/login?role=$role');
   }
 
-  void _maybeShowSnack(BuildContext context, String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(msg),
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 2),
+  static const Map<String, String> _infoContent = {
+    'Privacy Policy':
+        'We respect your privacy and ensure your data is handled securely.',
+    'Terms':
+        'By using this application, you agree to abide by our terms of service.',
+    'Help & Support':
+        'For assistance, please contact support@example.com.',
+  };
+
+  void _showContent(BuildContext context, String title) {
+    final text = _infoContent[title] ?? '';
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(title),
+        content: SingleChildScrollView(child: Text(text)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Close'),
+          ),
+        ],
       ),
     );
   }
