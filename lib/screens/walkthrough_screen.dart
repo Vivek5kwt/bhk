@@ -171,17 +171,17 @@ class _WalkthroughScreenState extends State<WalkthroughScreen>
                                   children: [
                                     _LinkText(
                                       label: 'Privacy Policy',
-                                      onTap: () => _showContent(context, 'Privacy Policy'),
+                                      onTap: () => context.go('/privacy'),
                                     ),
                                     _Dot(),
                                     _LinkText(
                                       label: 'Terms',
-                                      onTap: () => _showContent(context, 'Terms'),
+                                      onTap: () => context.go('/terms'),
                                     ),
                                     _Dot(),
                                     _LinkText(
                                       label: 'Help',
-                                      onTap: () => _showContent(context, 'Help & Support'),
+                                      onTap: () => context.go('/help'),
                                     ),
                                   ],
                                 ),
