@@ -39,14 +39,26 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const Icon(
+                  Icons.login,
+                  size: 80,
+                  color: Colors.deepPurple,
+                ),
+                const SizedBox(height: 20),
                 TextField(
                   controller: _emailController,
-                  decoration: const InputDecoration(labelText: 'Email'),
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    prefixIcon: Icon(Icons.email),
+                  ),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: _passwordController,
-                  decoration: const InputDecoration(labelText: 'Password'),
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                    prefixIcon: Icon(Icons.lock),
+                  ),
                   obscureText: true,
                 ),
                 const SizedBox(height: 20),
@@ -80,11 +92,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: const Text('Continue with phone'),
                 ),
                 TextButton(
-                  onPressed: () => context.go('/signup'),
+                  onPressed: () => context.push('/signup'),
                   child: const Text('Create account'),
                 ),
                 TextButton(
-                  onPressed: () => context.go('/forgot'),
+                  onPressed: () => context.push('/forgot'),
                   child: const Text('Forgot password?'),
                 ),
               ],
