@@ -11,6 +11,8 @@ import 'api/auth_service.dart';
 import 'screens/splash_screen.dart';
 import 'screens/walkthrough_screen.dart';
 import 'screens/home_screen.dart';
+import 'screens/info_screen.dart';
+import 'info/info_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -38,6 +40,9 @@ class MyApp extends StatelessWidget {
         builder: (_, state) => OtpScreen(confirmationResult: state.extra),
       ),
       GoRoute(path: '/home', builder: (_, __) => const HomeScreen()),
+      GoRoute(path: '/terms', builder: (_, __) => const InfoScreen(page: InfoPage.terms)),
+      GoRoute(path: '/privacy', builder: (_, __) => const InfoScreen(page: InfoPage.privacy)),
+      GoRoute(path: '/help', builder: (_, __) => const InfoScreen(page: InfoPage.help)),
     ],
   );
 
