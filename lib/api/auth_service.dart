@@ -7,7 +7,28 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FacebookAuth _facebookAuth = FacebookAuth.instance;
-  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://192.168.1.2:3000'));
+  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://192.168.1.2:3000'))
+    ..interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          print('REQUEST[${options.method}] => PATH: ${options.path}');
+          if (options.data != null) {
+            print('  Data: ${options.data}');
+          }
+          return handler.next(options);
+        },
+        onResponse: (response, handler) {
+          print('RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
+          print('  Data: ${response.data}');
+          return handler.next(response);
+        },
+        onError: (DioException e, handler) {
+          print('ERROR[${e.response?.statusCode}] => PATH: ${e.requestOptions.path}');
+          print('  Message: ${e.message}');
+          return handler.next(e);
+        },
+      ),
+    );
 
   Future<String> login(String email, String password, String? role) async {
     final path = role != null ? '/login/$role' : '/login';
