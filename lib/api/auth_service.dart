@@ -1,20 +1,38 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:dio/dio.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FacebookAuth _facebookAuth = FacebookAuth.instance;
+  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://localhost:3000/api'));
 
-  Future<String> login(String email, String password) async {
-    await _auth.signInWithEmailAndPassword(email: email, password: password);
-    return 'Login successful';
+  Future<String> login(String email, String password, String? role) async {
+    final path = role != null ? '/login/$role' : '/login';
+    try {
+      final res = await _dio.post(path, data: {
+        'email': email,
+        'password': password,
+      });
+      return res.data['message'] ?? 'Login successful';
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message'] ?? 'Login failed');
+    }
   }
 
-  Future<String> signup(String email, String password) async {
-    await _auth.createUserWithEmailAndPassword(email: email, password: password);
-    return 'Signup successful';
+  Future<String> signup(String email, String password, String? role) async {
+    final path = role != null ? '/signup/$role' : '/signup';
+    try {
+      final res = await _dio.post(path, data: {
+        'email': email,
+        'password': password,
+      });
+      return res.data['message'] ?? 'Signup successful';
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message'] ?? 'Signup failed');
+    }
   }
 
   Future<String> loginWithGoogle() async {

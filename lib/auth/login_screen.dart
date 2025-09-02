@@ -47,11 +47,11 @@ class _LoginScreenState extends State<LoginScreen>
     super.dispose();
   }
 
-  void _submit(BuildContext context) {
+  void _submit(BuildContext context, String? role) {
     if (!(_formKey.currentState?.validate() ?? false)) return;
     HapticFeedback.lightImpact();
     context.read<AuthBloc>().add(
-      LoginRequested(_email.text.trim(), _password.text),
+      LoginRequested(_email.text.trim(), _password.text, role),
     );
   }
 
@@ -251,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen>
                                         return null;
                                       },
                                       onSubmitted: (_) =>
-                                          _submit(context),
+                                          _submit(context, role),
                                     ),
 
                                     const SizedBox(height: 8),
@@ -326,7 +326,7 @@ class _LoginScreenState extends State<LoginScreen>
                                         label: 'Sign in',
                                         onPressed: loading
                                             ? null
-                                            : () => _submit(context),
+                                            : () => _submit(context, role),
                                       ),
                                     ),
 
@@ -465,8 +465,8 @@ class _LoginScreenState extends State<LoginScreen>
                                             ),
                                             onPressed: loading
                                                 ? null
-                                                : () => context
-                                                .push('/signup'),
+                                                : () => context.push(
+                                                    '/signup${role != null ? '?role=$role' : ''}'),
                                             child: const Text(
                                               'Create account',
                                               style: TextStyle(
