@@ -11,19 +11,19 @@ class AuthService {
     ..interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          print('REQUEST[${options.method}] => PATH: ${options.path}');
+          print('REQUEST[${options.method}] => URL: ${options.uri}');
           if (options.data != null) {
             print('  Data: ${options.data}');
           }
           return handler.next(options);
         },
         onResponse: (response, handler) {
-          print('RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
+          print('RESPONSE[${response.statusCode}] => URL: ${response.requestOptions.uri}');
           print('  Data: ${response.data}');
           return handler.next(response);
         },
         onError: (DioException e, handler) {
-          print('ERROR[${e.response?.statusCode}] => PATH: ${e.requestOptions.path}');
+          print('ERROR[${e.response?.statusCode}] => URL: ${e.requestOptions.uri}');
           print('  Message: ${e.message}');
           return handler.next(e);
         },
