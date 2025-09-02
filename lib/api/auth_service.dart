@@ -7,7 +7,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FacebookAuth _facebookAuth = FacebookAuth.instance;
-  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://localhost:3000/api'));
+  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://192.168.1.2:3000'));
 
   Future<String> login(String email, String password, String? role) async {
     final path = role != null ? '/login/$role' : '/login';
@@ -29,6 +29,7 @@ class AuthService {
         'email': email,
         'password': password,
       });
+      print('geteted the path $path');
       return res.data['message'] ?? 'Signup successful';
     } on DioException catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Signup failed');
