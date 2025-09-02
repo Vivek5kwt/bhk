@@ -51,7 +51,7 @@ class _SignupScreenState extends State<SignupScreen>
     super.dispose();
   }
 
-  void _submit(BuildContext context) {
+  void _submit(BuildContext context, String? role) {
     if (!(_formKey.currentState?.validate() ?? false)) return;
     if (!_agree) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -61,7 +61,7 @@ class _SignupScreenState extends State<SignupScreen>
     }
     HapticFeedback.lightImpact();
     context.read<AuthBloc>().add(
-      SignupRequested(_email.text.trim(), _password.text),
+      SignupRequested(_email.text.trim(), _password.text, role),
     );
   }
 
@@ -317,7 +317,7 @@ class _SignupScreenState extends State<SignupScreen>
                                           }
                                           return null;
                                         },
-                                        onSubmitted: (_) => _submit(context),
+                                        onSubmitted: (_) => _submit(context, role),
                                       ),
 
                                       const SizedBox(height: 10),
@@ -385,7 +385,7 @@ class _SignupScreenState extends State<SignupScreen>
                                           loading: loading,
                                           onPressed: loading
                                               ? null
-                                              : () => _submit(context),
+                                              : () => _submit(context, role),
                                         ),
                                       ),
 
@@ -434,7 +434,8 @@ class _SignupScreenState extends State<SignupScreen>
                                             if (context.canPop()) {
                                               context.pop();
                                             } else {
-                                              context.go('/login');
+                                              context.go(
+                                                  '/login${role != null ? '?role=$role' : ''}');
                                             }
                                           },
                                           icon: const Icon(
