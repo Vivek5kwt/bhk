@@ -68,7 +68,16 @@ class AuthService {
       idToken: auth.idToken,
     );
     await _auth.signInWithCredential(credential);
-    return 'Google sign in successful';
+    try {
+      final res = await _dio.post('/social-login/customer', data: {
+        'provider': 'google',
+        'token': auth.idToken,
+      });
+      return res.data['message'] ?? 'Google sign in successful';
+    } on DioException catch (e) {
+      throw Exception(
+          e.response?.data['message'] ?? 'Google sign in failed');
+    }
   }
 
   Future<String> loginWithFacebook() async {
@@ -76,10 +85,20 @@ class AuthService {
     if (result.status != LoginStatus.success) {
       throw Exception('Facebook sign in failed');
     }
+    final accessToken = result.accessToken!.token;
     final OAuthCredential credential =
-        FacebookAuthProvider.credential(result.accessToken!.token);
+        FacebookAuthProvider.credential(accessToken);
     await _auth.signInWithCredential(credential);
-    return 'Facebook sign in successful';
+    try {
+      final res = await _dio.post('/social-login/customer', data: {
+        'provider': 'facebook',
+        'token': accessToken,
+      });
+      return res.data['message'] ?? 'Facebook sign in successful';
+    } on DioException catch (e) {
+      throw Exception(
+          e.response?.data['message'] ?? 'Facebook sign in failed');
+    }
   }
 
   Future<ConfirmationResult> loginWithPhone(String phoneNumber) {
