@@ -7,7 +7,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FacebookAuth _facebookAuth = FacebookAuth.instance;
-  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://192.168.1.2:3000'))
+  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://192.168.1.14:3000/api'))
     ..interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
@@ -31,7 +31,7 @@ class AuthService {
     );
 
   Future<String> login(String email, String password, String? role) async {
-    final path = role != null ? '/login/$role' : '/login';
+    final path = role != null ? '/$role/login' : '/login';
     try {
       final res = await _dio.post(path, data: {
         'email': email,
@@ -44,7 +44,7 @@ class AuthService {
   }
 
   Future<String> signup(String email, String password, String? role) async {
-    final path = role != null ? '/signup/$role' : '/signup';
+    final path = role != null ? '/$role/signup' : '/signup';
     try {
       final res = await _dio.post(path, data: {
         'email': email,
